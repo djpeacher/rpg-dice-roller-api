@@ -1,0 +1,18 @@
+{
+  "name": "rpg-dice-roller-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dice-roller/rpg-dice-roller": "^5.1.0",
+    "countapi-js": "^1.0.2",
+    "express": "^4.17.2",
+    "helmet": "^5.0.2"
+  }
+}
