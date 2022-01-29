@@ -1,10 +1,11 @@
-const express = require('express');
 const helmet = require('helmet');
+const express = require('express');
+const compression = require('compression');
 const { DiceRoll } = require('@dice-roller/rpg-dice-roller');
-const countapi = require('countapi-js');
 
 const app = express();
 app.use(helmet());
+app.use(compression());
 app.set('json spaces', 2);
 
 app.get('/api/roll/:roll', (req, res) => {
