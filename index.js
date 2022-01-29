@@ -1,6 +1,7 @@
 const path = require('path');
 const helmet = require('helmet');
 const express = require('express');
+const countapi = require('countapi-js');
 const compression = require('compression');
 const { DiceRoll } = require('@dice-roller/rpg-dice-roller');
 
@@ -9,27 +10,43 @@ app.use(helmet());
 app.use(compression());
 app.set('json spaces', 2);
 
-app.get('/api/roll/:roll', (req, res) => {
-  countapi.hit('rpg-dice-roller-api', 'rolls-test');
+const COUNTAPI = {
+  NAMESPACE: process.env.COUNTAPI_NAMESPACE || 'rpg-dice-roller-api',
+  KEY: process.env.COUNTAPI_KEY || 'rolls',
+};
+
+app.get('/api/roll/:notation', (req, res) => {
+  countapi.hit(COUNTAPI.NAMESPACE, COUNTAPI.KEY).catch((e) => console.error(e));
   const verbose = req.query.verbose || req.query.v;
-  const roll = new DiceRoll(req.params.roll);
-  res.json(
-    verbose
-      ? roll
-      : {
-          averageTotal: roll.averageTotal,
-          maxTotal: roll.maxTotal,
-          minTotal: roll.minTotal,
-          output: roll.output,
-          total: roll.total,
-        }
-  );
+  try {
+    const roll = new DiceRoll(req.params.notation);
+    res.json(
+      verbose
+        ? roll
+        : {
+            averageTotal: roll.averageTotal,
+            maxTotal: roll.maxTotal,
+            minTotal: roll.minTotal,
+            output: roll.output,
+            total: roll.total,
+          }
+    );
+  } catch (e) {
+    console.error(e);
+    res.status(400).json({ error: 'Invalid Notation' });
+  }
 });
 
 app.get('/api/stats', (req, res) => {
-  countapi.info('rpg-dice-roller-api', 'rolls-test').then((result) => {
-    res.send({ rolls: result.value });
-  });
+  countapi
+    .info(COUNTAPI.NAMESPACE, COUNTAPI.KEY)
+    .then((result) => {
+      res.send({ rolls: result.value });
+    })
+    .catch((e) => {
+      console.error(e);
+      res.status(503).json({ error: 'Service Unavailable' });
+    });
 });
 
 app.get('/', (req, res) => {
@@ -40,3 +57,4 @@ app.get('*', (req, res) => {
   res.redirect('/');
 });
 
+app.listen(process.env.PORT || 3000);
