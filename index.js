@@ -18,7 +18,8 @@ const COUNTAPI = {
 
 app.get('/api/roll/:notation', (req, res) => {
   countapi.hit(COUNTAPI.NAMESPACE, COUNTAPI.KEY).catch((e) => console.error(e));
-  const verbose = req.query.verbose || req.query.v;
+  const verbose = req.query.v !== undefined;
+  console.log(req.query);
   try {
     const roll = new DiceRoll(req.params.notation);
     res.json(
