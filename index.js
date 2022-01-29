@@ -1,3 +1,4 @@
+const path = require('path');
 const helmet = require('helmet');
 const express = require('express');
 const compression = require('compression');
@@ -31,4 +32,11 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
-app.listen(8080);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/index.html'));
+});
+
+app.get('*', (req, res) => {
+  res.redirect('/');
+});
+
