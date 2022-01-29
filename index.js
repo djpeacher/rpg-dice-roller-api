@@ -8,6 +8,7 @@ const { DiceRoll } = require('@dice-roller/rpg-dice-roller');
 const app = express();
 app.use(helmet());
 app.use(compression());
+app.use(express.static('public'));
 app.set('json spaces', 2);
 
 const COUNTAPI = {
