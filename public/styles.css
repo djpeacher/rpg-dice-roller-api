@@ -1,0 +1,25 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #809fff;
+  }
+}
+
+input {
+  width: 100%;
+}
+
+/* underline on hover */
+:not(nav) > a {
+  text-decoration: none;
+}
+:not(nav) > a:hover {
+  text-decoration: underline;
+}
+
+.notice {
+  background: var(--accent-bg);
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}

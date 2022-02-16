@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="twa.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <title>rpg-dice-roller-api</title>
   </head>
@@ -14,22 +16,24 @@
     </header>
     <main>
       <p>This API allows you to roll dice using <a href="https://dice-roller.github.io/documentation/guide/notation/" target="_blank">dice notation</a>!</p>
-      <h2>/api/roll/:notation[?v]</h2>
-      <pre style="white-space: normal;">
-        <p><a href="/api/roll/4d6" target="_blank" class="text-decoration-none">https://rpgdr.djpeacher.com/api/roll/4d6</a></p>
-        <p>→ 200 { "averageTotal": 14, "maxTotal": 24, "minTotal": 4, "output": "4d6: [1, 1, 3, 3] = 8", "total": 8 }</p>
+      <pre style="white-space: normal; overflow-wrap: break-word;">
+        https://rpgdr.djpeacher.com/api/roll/<mark>notation</mark>
+        <br /><br />
+        You can add <mark>?v</mark> for a verbose output.
       </pre>
-      <h2>/api/roll/:notation[?v]</h2>
-      <pre style="white-space: normal;">
-        <p><a href="/api/stats" target="_blank" class="text-decoration-none">https://rpgdr.djpeacher.com/api/stats</a></p>
-        <p>→ 200 { "rolls": 9001 }</p>
+      <pre style="white-space: normal; overflow-wrap: break-word;">
+        <a href="/api/roll/4d6" target="_blank">https://rpgdr.djpeacher.com/api/roll/4d6</a>
+        <br /><small>→ 200 { "averageTotal": 14, "maxTotal": 24, "minTotal": 4, "output": "4d6: [1, 1, 3, 3] = 8", "total": 8 }</small>
       </pre>
     </main>
     <footer>
       <nav>
-        <a href="https://twitter.com/_djpeacher" target="_blank">@_djpeacher</a>
         <a href="https://github.com/djpeacher/rpg-dice-roller-api" target="_blank">GitHub</a>
       </nav>
+      <p>
+        Made with <i class="twa twa-red-heart"></i> by
+        <a href="https://www.djpeacher.com" target="_blank">Jonathan Peacher</a>
+      </p>
     </footer>
   </body>
 </html>
