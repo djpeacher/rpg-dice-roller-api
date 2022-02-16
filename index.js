@@ -18,13 +18,13 @@ app.set('json spaces', 2);
 
 const COUNTAPI = {
   NAMESPACE: process.env.COUNTAPI_NAMESPACE || 'rpg-dice-roller-api',
-  KEY: process.env.COUNTAPI_KEY || 'rolls',
+  ROLL_KEY: process.env.COUNTAPI_ROLL_KEY || 'rolls',
+  INDEX_KEY: process.env.COUNTAPI_INDEX_KEY || 'index-visits',
 };
 
 app.get('/api/roll/:notation', (req, res) => {
-  countapi.hit(COUNTAPI.NAMESPACE, COUNTAPI.KEY).catch((e) => console.error(e));
+  countapi.hit(COUNTAPI.NAMESPACE, COUNTAPI.ROLL_KEY).catch((e) => console.error(e));
   const verbose = req.query.v !== undefined;
-  console.log(req.query);
   try {
     const roll = new DiceRoll(req.params.notation);
     res.json(
@@ -46,7 +46,7 @@ app.get('/api/roll/:notation', (req, res) => {
 
 app.get('/api/stats', (req, res) => {
   countapi
-    .info(COUNTAPI.NAMESPACE, COUNTAPI.KEY)
+    .info(COUNTAPI.NAMESPACE, COUNTAPI.ROLL_KEY)
     .then((result) => {
       res.send({ rolls: result.value });
     })
@@ -57,6 +57,9 @@ app.get('/api/stats', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+  countapi
+    .hit(COUNTAPI.NAMESPACE, COUNTAPI.INDEX_KEY)
+    .catch((e) => console.error(e));
   res.sendFile(path.join(__dirname, '/index.html'));
 });
 
